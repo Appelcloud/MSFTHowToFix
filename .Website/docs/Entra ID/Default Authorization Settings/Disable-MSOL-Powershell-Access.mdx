@@ -1,0 +1,39 @@
+---
+sidebar_label: Disable MSOL Powershell Access
+sidebar_position: 2
+title: Disable MSOL Powershell Access
+---
+
+## Description
+
+Blocks user-based access to the legacy service endpoint used by MSOL PowerShell. This does not affect Azure AD Connect or Microsoft Graph.
+We need to block MSOL on tenant basis.
+
+### Guide
+
+1.) Open **powershell** and install the following module
+```
+Install-Module -Name Microsoft.Graph.Identity.SignIns
+```
+
+2.) Import and connect to Microsoft Graph
+```
+Import-Module Microsoft.Graph.Identity.SignIns
+Connect-MgGraph -Scopes Policy.ReadWrite.Authorization
+```
+
+Consent to for Microsoft Graph if you haven't allready done it
+
+![Pic01](/img/Disable-SSPR-for-Administrators/Pic01.png)
+
+3.) Once connected, block MSOL for powershell with the following command.
+
+```
+$params = @{
+	blockMsolPowerShell = $true
+}
+
+Update-MgPolicyAuthorizationPolicy -BodyParameter $params
+```
+
+The policy takes effect within 60 minutes.

@@ -1,0 +1,40 @@
+---
+sidebar_label: Disable SSPR for Administrators
+sidebar_position: 1
+title: Disable SSPR for Administrators
+---
+
+## Description
+
+Administrators with sensitive roles should use phishing-resistant authentication methods only and therefore not able to reset their password using SSPR.
+We need to disable SSPR on tenant basis.
+
+### Guide
+
+1.) Open **powershell** and install the following module
+```
+Install-Module -Name Microsoft.Graph.Identity.SignIns
+```
+
+2.) Import and connect to Microsoft Graph
+```
+Import-Module Microsoft.Graph.Identity.SignIns
+Connect-MgGraph -Scopes Policy.ReadWrite.Authorization
+```
+
+Consent to for Microsoft Graph if you haven't allready done it
+
+![Pic01](/img/block-msol-powershell-access/Pic01.png)
+
+3.) Once connected, we can check the current setting for AllowedToUseSspr, which shows whether administrators of the tenant are permitted to use the SSPR.
+```
+$params = @{
+allowedToUseSSPR = $false
+}
+
+Update-MgPolicyAuthorizationPolicy -BodyParameter $params
+```
+
+4.) To disable SSPR for administrators, we need to set the value to FALSE.
+
+The policy takes effect within 60 minutes.
