@@ -1,0 +1,12 @@
+---
+sidebar_label: Disable SSPR for Administrators
+sidebar_position: 1
+title: Disable SSPR for Administrators
+---
+
+## Description
+
+Administrators with sensitive roles should use phishing-resistant authentication methods only and therefore not able to reset their password using SSPR.
+We need to disable SSPR for Administrators on tenant basis.
+
+### Guide
